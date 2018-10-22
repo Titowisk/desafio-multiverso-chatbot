@@ -1,8 +1,14 @@
 const express = require('express');
 const watson = require('./config.json');
 const bodyParser = require('body-parser');
-var prompt = require('prompt-sync')();
+
 let AssistantV1 = require('watson-developer-cloud/assistant/v1'); // watson sdk
+
+const app = express();
+
+app.use(bodyParser.json());
+
+const port = 8000;
 
 const assistant = new AssistantV1({
     url: watson.url,
@@ -10,36 +16,27 @@ const assistant = new AssistantV1({
     iam_apikey: watson.apikey,
 });
 
-let processResponse = (err, response) => {
-    if (err) {
-        console.error(err);
-        return;
-    }
+// http://expressjs.com/en/4x/api.html
+app.post('/conversation/', (req, res) => {
+    const { text, context = {} } = req.body;
 
-    // If an intent was detected, log it out to the console.
-    if (response.intents.length > 0) {
-        console.log(`Detected intent: #${response.intents[0].intent}`);
-    }
-
-    // Display the output from dialog, if any. Assumes a single text response.
-    if (response.output.generic.length != 0) {
-        console.log(response.output.generic[0].text);
-    }
-
-    // Prompt for the next round of input.
-    let newMessageFromUser = prompt('>> ');
-    assistant.message({
+    const params = {
+        input: { text },
         workspace_id: watson.workspace_id,
-        input: {text: newMessageFromUser}
-    }, processResponse);
+        context
+    };
 
-};
+    assistant.message(params, (err, response) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json(err);
+        } else {
+            res.json(response);
+            console.log(response.output.generic[0].text);
+        }
+    });
+});
 
-// Start conversation with empty message.
-assistant.message({
-    workspace_id: watson.workspace_id
-}, processResponse);
 
 
-// next steps
-// https://console.bluemix.net/docs/services/conversation/develop-app.html#construindo-um-aplicativo-cliente
+app.listen(port, () => console.log(`Running on port ${port}`))
