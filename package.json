@@ -1,0 +1,16 @@
+{
+  "name": "chatbot-app",
+  "version": "1.0.0",
+  "description": "Aplicação de chatbot utilizando o watson assistant para o desafio morty da Solutis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vitor Ribeiro",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "watson-developer-cloud": "^3.12.0"
+  }
+}
