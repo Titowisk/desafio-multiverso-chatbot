@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const watson = require('./config.json');
 
+const path = require('path');
+
 let AssistantV1 = require('watson-developer-cloud/assistant/v1'); // watson sdk
 
 const app = express();
@@ -40,9 +42,8 @@ app.post('/conversation/', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile('./src/index.html');
+    res.sendFile(path.join(__dirname + '/src/index.html'));
 })
-
 
 
 app.listen(port, () => console.log(`Running on port ${port}`))
