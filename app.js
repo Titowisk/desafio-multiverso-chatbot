@@ -1,12 +1,15 @@
 const express = require('express');
-const watson = require('./config.json');
 const bodyParser = require('body-parser');
+let cors = require('cors');
+const watson = require('./config.json');
 
 let AssistantV1 = require('watson-developer-cloud/assistant/v1'); // watson sdk
 
 const app = express();
 
+app.use(express.static('./assets'));
 app.use(bodyParser.json());
+app.use(cors());
 
 const port = 8000;
 
@@ -32,7 +35,6 @@ app.post('/conversation/', (req, res) => {
             res.status(500).json(err);
         } else {
             res.json(response);
-            console.log(response.output.generic[0].text);
         }
     });
 });
