@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-let cors = require('cors');
+const cors = require('cors');
 const watson = require('./config.json');
 
 let AssistantV1 = require('watson-developer-cloud/assistant/v1'); // watson sdk
@@ -38,6 +38,10 @@ app.post('/conversation/', (req, res) => {
         }
     });
 });
+
+app.get('/', (req, res) => {
+    res.sendFile('./src/index.html');
+})
 
 
 
