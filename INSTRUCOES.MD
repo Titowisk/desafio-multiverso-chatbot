@@ -8,7 +8,7 @@ cd desafio-multiverso-chatbot
 ```
 npm i
 ```
-- Adicione um arquivo chamado config.json à pasta do repositorio e coloque as credencias enviadas por e-mail.
+- Adicione um arquivo chamado config.json à pasta raiz do repositorio e coloque as credenciais enviadas por e-mail.
 - Execute o comando: 
 ```
 node app.js
