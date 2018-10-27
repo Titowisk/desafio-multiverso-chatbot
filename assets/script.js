@@ -16,6 +16,8 @@ const InsertTemplateInTheChat = (template) => {
     div.innerHTML = template;
 
     chat.appendChild(div);
+
+    chat.scrollTop = chat.scrollHeight;
 };
 
 const getWatsonMessageAndInsertTemplate = async (text = '') => {
@@ -25,8 +27,8 @@ const getWatsonMessageAndInsertTemplate = async (text = '') => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-        text,
-        context,
+            text,
+            context,
         }),
     })).json();
 
